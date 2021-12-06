@@ -44,7 +44,6 @@ namespace LibraryTerminal
 		//Display the entire list of books. Format it nicely.
 
 
-		//
 		//Search for a book by author.
 
 
@@ -64,9 +63,31 @@ namespace LibraryTerminal
 
 		//Return a book.
 
+		static bool ContinueProgram()
+		{
+			string input;
+			Console.WriteLine("Continue? (Y)es or (N)o:\t");
+			while (true)
+			{
+				input = Console.ReadLine();
+				input = input.ToUpper().Substring(0);
+				if (input == "Y")
+				{
+					return true;
+				}
+				else if (input == "N")
+				{
+					return false;
+				}
+				else
+				{
+					Console.WriteLine("(Y)es or (N)o:\t");
+				}
+			}
+		}
+
 		static void Main(string[] args)
 		{
-
 			List<Book> BookList = new List<Book>();
 			Book.BookList.Add(new Book ("Green Eggs and Ham", "Dr. Seuss", true, 0));   // Green Eggs is on the shelf
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
@@ -80,12 +101,16 @@ namespace LibraryTerminal
 			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, 2));
 			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
 			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
-			//harry potter
-			//art of war
-			//
 
+			//TODO: implement main loop
+			//	main code here
+			//do
+			//{
+				//	begin code here
+
+				//	end code here
+			//} while (ContinueProgram() == true);
+			//
 		}
 	}
 }
-
-//test, this from branch alex
