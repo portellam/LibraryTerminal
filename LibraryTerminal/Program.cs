@@ -66,6 +66,7 @@ namespace LibraryTerminal
 
 		static void Main(string[] args)
 		{
+
 			List<Book> BookList = new List<Book>();
 			Book.BookList.Add(new Book ("Green Eggs and Ham", "Dr. Seuss", true, 0));   // Green Eggs is on the shelf
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
@@ -86,3 +87,5 @@ namespace LibraryTerminal
 		}
 	}
 }
+
+//test, this from branch alex
