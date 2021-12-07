@@ -3,41 +3,7 @@ using System.Collections.Generic;
 
 namespace LibraryTerminal
 {
-	class Book
-	{
-		public string Title;
-		public string Author;
-		public bool Status;
-		public int DueDate;
-		public static List<Book> BookList = new List<Book>();
-
-		public Book(string title, string author, bool status, int dueDate)
-		{
-			Title = title;
-			Author = author;
-			Status = status;
-			DueDate = dueDate;
-		}
-
-		public string BookStatus(bool status)
-		{
-			if (status == true)
-			{
-				return "On Shelf";
-			}
-			else
-			{
-				return "Checked Out";
-			}
-
-		}
-
-		public override string ToString()
-		{
-			return String.Format("{0}\t{1}\t{2}\t${3}\t", Title, Author, Status, DueDate);
-		}
-
-	}
+	
 
 	class Program
 	{
@@ -66,8 +32,7 @@ namespace LibraryTerminal
 
 		static void Main(string[] args)
 		{
-			List<Book> BookList = new List<Book>();
-			Book.BookList.Add(new Book ("Green Eggs and Ham", "Dr. Seuss", true, 0));   // Green Eggs is on the shelf
+			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, 0));   // Green Eggs is on the shelf
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
 			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, 14));
 			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, 12));
@@ -83,6 +48,9 @@ namespace LibraryTerminal
 			//art of war
 			//
 
+			Book book = Book.SearchAuthor("foobar");
+			if (book != null) Console.WriteLine(book);
+			else Console.WriteLine("No authors found");
 		}
 	}
 }
