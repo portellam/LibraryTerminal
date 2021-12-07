@@ -56,8 +56,11 @@ namespace LibraryTerminal
 	}
 	class Program
 	{
+		
+		//Search for a book by title keyword.
+		
 		//Search for a book by author.
-
+		//TODO:	implement search by methods and ask user if they wish to return a checked out book and vice versa
 		//Select a book from the list to check out.
 
 		//	-If it’s already checked out, let them know.
@@ -65,6 +68,7 @@ namespace LibraryTerminal
 		//	-If not, check it out to them and set the due date to 2 weeks from today. (The DateTime class will be helpful)
 
 		//Return a book.
+
 
 		static bool ContinueProgram()
 		{
