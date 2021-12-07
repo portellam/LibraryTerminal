@@ -36,7 +36,7 @@ namespace LibraryTerminal
 
 		public override string ToString()
 		{
-			return $"{Title}\t{Author}\t{BookStatus()}\t{DueDate}\t";
+			return String.Format("{0}\t{1}\t{2}\t${3}\t", Title, Author, Status, DueDate);
 		}
 
 		public static Book SearchAuthor(string input)
@@ -77,24 +77,24 @@ namespace LibraryTerminal
 			return output;
 		}
 
-		public static Book ReturnBook(int index)
+		public bool Return()
 		{
-			Book aBook = BookList[index];
-			if (!aBook.Status)
-			{
-				aBook.Status = true;
-			}
-			return null;
+			// if book is already on shelf, it cannot be returned, return false (i.e. failure)
+			if (Status) return false;
+
+			// if book is not on shelf, invert status and return true (i.e. success)
+			Status = !Status;
+			return true;
 		}
 
-		public static Book CheckoutBook(int index)
+		public bool CheckOut()
 		{
-			Book aBook = BookList[index];
-			if (aBook.Status)
-			{
-				aBook.Status = false;
-			}
-			return null;
+			// if book is not available, return false (i.e. failure)
+			if (!Status) return false;
+
+			// if book is available invert status, return true (i.e. success)
+			Status = !Status;
+			return true;
 		}
 
 	}
