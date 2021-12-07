@@ -168,6 +168,7 @@ namespace LibraryTerminal
 		static void Main(string[] args)
 		{
 			string input;
+			Console.WriteLine("Welcome to the Grand Circus Library!");
 			//	ask user to read from file
 			ReadFile(Book.BookList);
 
@@ -185,7 +186,6 @@ namespace LibraryTerminal
 			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
 			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
 
-			Console.WriteLine("Welcome to the Grand Circus Library!");
 			//	loop main code here
 			do
 			{
