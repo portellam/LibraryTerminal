@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace LibraryTerminal
 {
 	public class Book
 	{
+		// static booklist to hold all books
 		public static List<Book> BookList = new List<Book>();
 
+		// book member variables
 		public string Title;
 		public string Author;
 		public bool Status;
-		public DateTime DueDate;	//NOTE: DateTime is a function which calls the current date and time ?
+		public DateTime DueDate;
 
 		/* CONSTRUCTORS */
 		public Book(string title, string author, bool status, DateTime dueDate)
@@ -36,6 +37,7 @@ namespace LibraryTerminal
 			}
 		}
 
+		// return specific book
 		public bool ReturnBook()
 		{
 			// if book is already on shelf, it cannot be returned, return false (i.e. failure)
@@ -46,6 +48,7 @@ namespace LibraryTerminal
 			return true;
 		}
 
+		// check out specific book
 		public bool CheckOutBook()
 		{
 			// if book is not available, return false (i.e. failure)
@@ -60,30 +63,30 @@ namespace LibraryTerminal
 		/* OVERRIDES */
 		public override string ToString()
 		{
-			//NOTE: String.Format uses {index,offset} to format strings on a line
-			//NOTE: Status ? "N/A" : DueDate.ToString("d")		is the same as an if else statement
-			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), Status ? "N/A" : DueDate.ToString("d")); 
+			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), Status ? "N/A" : DueDate.ToString("d"));
 		}
 
 		/* STATIC BOOK METHODS */
+		// search by author
 		public static Book SearchAuthor(string input)
 		{
 			foreach (Book book in BookList)
 			{
-				if (book.Author.Contains(input))
+				if (book.Author.ToLower().Contains(input.ToLower()))
 				{
-					Console.WriteLine("Here's your book: \n");
+					Console.WriteLine("\nHere's your book:");
 					return book;
 				}
 			}
 			return null;
 		}
-
+		
+		// search by title
 		public static Book SearchTitle(string input)
 		{
 			foreach (Book book in BookList)
 			{
-				if (book.Title.Contains(input))
+				if (book.Title.ToLower().Contains(input.ToLower()))
 				{
 					Console.WriteLine("Here's your book: \n");
 					return book;
@@ -97,7 +100,7 @@ namespace LibraryTerminal
 		{
 			string output = "";
             Console.WriteLine(String.Format("\n{0,-40} {1,-35} {2,-15} {3,-11}", "Title", "Author", "Status", "Due Date"));
-            Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");	// does this line require String.Format ???
+            Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");
             for (int index = 0; index < BookList.Count; index++)
 			{
 				Book aBook = BookList[index];
@@ -109,35 +112,25 @@ namespace LibraryTerminal
 		// moved to Book as a static method for initializing BookList from a file
 		public static void ReadFile()
 		{
-			// input is unecessary here since we are not looping
-			string /*input,*/ line;
-
-			//no need to ask user if they want to read from a file inside ReadFile()
-			//Console.WriteLine("Do you wish to read the Library Inventory from file? (Y)es or (N)o:\t");
-			/*while (true)
-			{
-			input = Console.ReadLine();
-			input = input.ToUpper().Substring(0);
-			if (input == "Y")
-			{*/
-			// we just need try..catch since we are not looping inside of ReadFile()
-
 			// get file name from user
 			Console.Write("Enter filename: ");
 			string path = Console.ReadLine();
 
 			try
 			{
+				// clear booklist to avoid duplicates, etc
 				if (BookList.Count > 0) BookList.Clear();
 
-				//	Read from file
+				// initialized streamreader to reading from file
 				StreamReader sr = new StreamReader(path);
+				// variable to capure line from file
+				string line;
 				//	Continue to read until you reach end of file
-				//	Read the first line of text
 				while ((line = sr.ReadLine()) != null)
 				{
-					//	TODO: implement write to file, each quality of class Book in BookList
+					// split line into delimited elements
 					string[] info = line.Split(',');
+					// create a new book
 					Book aBook = new Book(info[0], info[1], bool.Parse(info[2]), DateTime.Parse(info[3]));
 					//	add aBook to BookList
 					Book.BookList.Add(aBook);
@@ -150,45 +143,23 @@ namespace LibraryTerminal
 				// updated error ouput message
 				Console.WriteLine($"Error reading from file: {ex.Message} (Path: {path})");
 			}
-			/*}
-			else if (input == "N")
-			{
-				return;
-			}
-			else
-			{
-				Console.WriteLine("(Y)es or (N)o:\t");
-			}*/
 		}
 
 		// moved to Book as a static method for saving BookList to a file
 		public static void WriteFile()
 		{
-			//	TODO: ask user if they wish to write to file
-			//string input;
-
-			// line below is unecessary as we can ask the user if they want to save to a file before we call WriteFile()
-			//Console.WriteLine("Do you wish to read the Library Inventory from file? (Y)es or (N)o:\t");
-			/*while (true)
-			{*/
-			//input = Console.ReadLine();
-			//input = input.ToUpper().Substring(0);
-			/*if (input == "Y")
-			{
-			*/
-			// we just need the try catch block since we are not looping inside of WriteFile
-
 			// get file name from user
 			Console.Write("Enter filename: ");
 			string path = Console.ReadLine();
 
 			try
 			{
+				// if booklist is empty, throw exception to let user know they can't save an empty list
 				if (BookList.Count <= 0) throw new Exception("Cannot save an empty list of books...");
 
-				// using path parameter to control what the file is called and where it should be saved
+				// initialized streamwriter to write to file
 				StreamWriter sw = new StreamWriter(path);
-				//	Write BookList to file 
+				//	Write BookList to file
 				for (int index = 0; index < BookList.Count; index++)
 				{
 					Book aBook = BookList[index];
@@ -203,17 +174,6 @@ namespace LibraryTerminal
 				// updated error ouput message
 				Console.WriteLine($"Error writing to file: {ex.Message} (Path: {path})");
 			}
-			/*
-			}
-			
-			else if (input == "N")
-			{
-				return;
-			}
-			else
-			{
-				Console.WriteLine("(Y)es or (N)o:\t");
-			}*/
 		}
 	}
 

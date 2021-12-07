@@ -1,25 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace LibraryTerminal
 {
 	class Program
 	{
-
-		//Search for a book by title keyword.
-
-		//Search for a book by author.
-		//TODO:	implement search by methods and ask user if they wish to return a checked out book and vice versa
-		//Select a book from the list to check out.
-
-		//	-If it’s already checked out, let them know.
-
-		//	-If not, check it out to them and set the due date to 2 weeks from today. (The DateTime class will be helpful)
-
-		//Return a book.
-
+		// function to control main loop
 		static bool ContinueProgram()
 		{
 			string input;
@@ -28,7 +13,7 @@ namespace LibraryTerminal
 			{
 				input = Console.ReadLine().ToUpper();
 
-				if (input.Substring(0) == "Y" || input == "YES")
+				if (input.Substring(0) == "Y")
 				{
 					return true;
 				}
@@ -44,8 +29,7 @@ namespace LibraryTerminal
 		}
 
 		// function to determine what to search books by
-		// we don't need BookList in the parameters because we don't use it
-		static Book AuthorOrTitle(/*List<Book> BookList*/)
+		static Book AuthorOrTitle()
 		{
 			string input;
 
@@ -53,9 +37,7 @@ namespace LibraryTerminal
 			Console.Write("Do you wish to Search by Author or Title? (A/T): ");
 			while (true)
 			{
-				/*input = Console.ReadLine();
-				input = input.ToUpper().Substring(0);*/
-				// can do all of the above on one line
+				// get input form user
 				input = Console.ReadLine().ToUpper();
 
 				if (input.Substring(0) == "A")
@@ -63,10 +45,7 @@ namespace LibraryTerminal
 					//ask user for input
 					Console.Write("Enter Author: ");
 					input = Console.ReadLine();
-					// get book
-					/*Book aBook = Book.SearchAuthor(input);
-					return aBook;*/
-					// can do all of the above on one line
+					// get and return book
 					return Book.SearchAuthor(input);
 				}
 				else if (input.Substring(0) == "T")
@@ -74,10 +53,7 @@ namespace LibraryTerminal
 					//ask user for input
 					Console.Write("Enter Title: ");
 					input = Console.ReadLine();
-					// get book
-					/*Book aBook = Book.SearchTitle(input);
-					return aBook;*/
-					// can do all of the above on one line
+					// get and return book
 					return Book.SearchTitle(input);
 				}
 				else
@@ -87,6 +63,7 @@ namespace LibraryTerminal
 			}
 		}
 
+		// print menu function
 		static void PrintMenu()
         {
 			Console.WriteLine("\nLibrary Menu Options: \n" +
@@ -99,24 +76,9 @@ namespace LibraryTerminal
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Welcome to the Grand Circus Library!");
-			/*//	ask user to read from file
-			ReadFile(Book.BookList);*/
 
-			// flag to keep track of whether we read from a file and if it was successful
-			//bool readFile = false;
-			/*Console.Write("Would you like to load booklist from a file? (y/n) (default = n): ");
-			// read key pressed from user
-			if (Console.ReadKey(true).Key == ConsoleKey.Y)
-            {
-				readFile = Book.ReadFile("BookList.txt");
-            }*/
-
-			/*// initialize list only if ReadFile was unsuccessful or if user did not opt to read file
-			if (!readFile)
-			{
-			*/// initialize book list here if we are not reading from a file
+			// initialize book list here
 			DateTime today = DateTime.Today;
-
 			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, today));
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, today));
 			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, today.AddDays(14)));
@@ -129,7 +91,6 @@ namespace LibraryTerminal
 			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, today.AddDays(14)));
 			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, today));
 			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, today.AddDays(14)));
-			/*}*/
 
 			//	loop main code here
 			do
@@ -162,64 +123,59 @@ namespace LibraryTerminal
 					break;
 				} while (true);	
 
-
+				// act based on option selected
 				switch(opt)
                 {
+					// print all books
 					case 1:
 						Console.WriteLine(Book.ListBooks());
 						break;
+					// search by author or title
 					case 2:
 						Book book = AuthorOrTitle();
+
+						// only do something if a book was found
 						if (book != null)
 						{
+							Console.WriteLine(String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", "Title", "Author", "Status", "Due Date"));
+							Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");
 							Console.WriteLine(book);
-							Console.Write("Would you like to check out the book? (y/n): ");
+
+							if (book.Status) Console.Write("\nWould you like to check out the book? (y/n): ");
+							else Console.Write("\nWould you like to return the book? (y/n): ");
+
 							input = Console.ReadLine().ToLower();
 
 							if (input == "y" || input == "yes")
-                            {
-								if (book.CheckOutBook())
+							{
+								if (book.Status)
 								{
-									Console.WriteLine($"You've successfully checked out {book.Title} by {book.Author}");
+									if (book.CheckOutBook()) Console.WriteLine($"You've successfully checked out {book.Title} by {book.Author}.");
 								}
 								else
-                                {
-									Console.WriteLine($"You cannot check out {book.Title} because it is not available...");
-                                }
-                            }
+								{
+									if (book.ReturnBook()) Console.WriteLine($"You've successfully returned {book.Title} by {book.Author}.");
+								}
+							}
 						}
+						// othwerwise let the user know nothing matched the query
 						else
 						{
 							Console.WriteLine("Could not find a book matching your query...");
 						}
-						
 						break;
 					case 3:
+						// read booklist from a file
 						Book.ReadFile();
 						break;
 					case 4:
+						// write booklist to a file
 						Book.WriteFile();
 						break;
                 }
 
-				
+			} while (ContinueProgram());
 
-				/*Book aBook = AuthorOrTitle();
-				if (aBook != null)
-				{
-					Console.WriteLine(aBook);
-				}
-				else
-				{
-					Console.WriteLine("Book not found.");
-				}*/
-			}
-			// do not need to add == true here, ContinueProgram returns a boolean
-			while (ContinueProgram()/* == true*/);
-
-			//	ask user to save to file
-			/*WriteFile(Book.BookList);*/
-			//	end program here
 		}
 	}
 }
