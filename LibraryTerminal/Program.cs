@@ -7,17 +7,6 @@ namespace LibraryTerminal
 
 	class Program
 	{
-		//Display the entire list of books. Format it nicely.
-
-
-		//
-		//Search for a book by author.
-
-
-
-		//Search for a book by title keyword.
-
-
 
 		//Select a book from the list to check out.
 
@@ -44,13 +33,8 @@ namespace LibraryTerminal
 			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, 2));
 			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
 			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
-			//harry potter
-			//art of war
-			//
-
-			Book book = Book.SearchAuthor("foobar");
-			if (book != null) Console.WriteLine(book);
-			else Console.WriteLine("No authors found");
+			
+		
 		}
 	}
 }

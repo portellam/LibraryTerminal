@@ -63,10 +63,8 @@ namespace LibraryTerminal
 					return book;
 				}
 			}
-
 			return null;
 		}
-
 
 	}
 }
