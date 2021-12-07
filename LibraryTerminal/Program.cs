@@ -3,42 +3,6 @@ using System.Collections.Generic;
 
 namespace LibraryTerminal
 {
-	class Book
-	{
-		public string Title;
-		public string Author;
-		public bool Status;
-		public int DueDate;
-		public static List<Book> BookList = new List<Book>();
-
-		public Book(string title, string author, bool status, int dueDate)
-		{
-			Title = title;
-			Author = author;
-			Status = status;
-			DueDate = dueDate;
-		}
-
-		public string BookStatus(bool status)
-		{
-			if (status == true)
-			{
-				return "On Shelf";
-			}
-			else
-			{
-				return "Checked Out";
-			}
-
-		}
-
-		public override string ToString()
-		{
-			return String.Format("{0}\t{1}\t{2}\t${3}\t", Title, Author, Status, DueDate);
-		}
-
-	}
-
 	class Program
 	{
 		//Display the entire list of books. Format it nicely.
@@ -83,6 +47,12 @@ namespace LibraryTerminal
 			//art of war
 			//
 
+		}
+
+		public void ReturnBook(Book book)
+		{
+			if (!book.Return()) Console.WriteLine("Cannot return a book that isn't checked out...");
+			else Console.WriteLine("Book successfully returned!");
 		}
 	}
 }
