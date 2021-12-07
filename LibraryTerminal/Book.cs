@@ -118,13 +118,15 @@ namespace LibraryTerminal
 
 			try
 			{
+				// initialized streamreader to reading from file
+				StreamReader sr = new StreamReader(path);
+
 				// clear booklist to avoid duplicates, etc
 				if (BookList.Count > 0) BookList.Clear();
 
-				// initialized streamreader to reading from file
-				StreamReader sr = new StreamReader(path);
 				// variable to capure line from file
 				string line;
+
 				//	Continue to read until you reach end of file
 				while ((line = sr.ReadLine()) != null)
 				{
