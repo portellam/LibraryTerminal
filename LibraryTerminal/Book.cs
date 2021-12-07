@@ -45,7 +45,7 @@ namespace LibraryTerminal
 			{
 				if (input == book.Author)
 				{
-                    Console.WriteLine("Here's your book: \n");
+					Console.WriteLine("Here's your book: \n");
 					return book;
 				}
 			}
@@ -53,7 +53,7 @@ namespace LibraryTerminal
 		}
 
 		public static Book SearchTitle(string input)
-        {
+		{
 			foreach (Book book in BookList)
 			{
 				if (input == book.Title)

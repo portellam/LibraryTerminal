@@ -7,9 +7,9 @@ namespace LibraryTerminal
 {
 	class Program
 	{
-		
+
 		//Search for a book by title keyword.
-		
+
 		//Search for a book by author.
 		//TODO:	implement search by methods and ask user if they wish to return a checked out book and vice versa
 		//Select a book from the list to check out.
@@ -19,7 +19,7 @@ namespace LibraryTerminal
 		//	-If not, check it out to them and set the due date to 2 weeks from today. (The DateTime class will be helpful)
 
 		//Return a book.
-    
+
 		static bool ContinueProgram()
 		{
 			string input;
@@ -170,7 +170,7 @@ namespace LibraryTerminal
 			string input;
 			//	ask user to read from file
 			ReadFile(Book.BookList);
-  
+
 			//	book list here
 			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, 0));
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
@@ -202,9 +202,8 @@ namespace LibraryTerminal
 			while (ContinueProgram() == true);
 
 			//	ask user to save to file
-			 WriteFile(Book.BookList);
+			WriteFile(Book.BookList);
 			//	end program here
-			}
 		}
 	}
 }
