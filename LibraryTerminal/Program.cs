@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -23,51 +23,62 @@ namespace LibraryTerminal
 		static bool ContinueProgram()
 		{
 			string input;
-			Console.WriteLine("Continue? (Y)es or (N)o:\t");
+			Console.Write("\nContinue? (Y)es or (N)o: ");
 			while (true)
 			{
-				input = Console.ReadLine();
-				input = input.ToUpper().Substring(0);
-				if (input == "Y")
+				input = Console.ReadLine().ToUpper();
+
+				if (input.Substring(0) == "Y")
 				{
 					return true;
 				}
-				else if (input == "N")
+				else if (input.Substring(0) == "N")
 				{
 					return false;
 				}
 				else
 				{
-					Console.WriteLine("(Y)es or (N)o:\t");
+					Console.Write("(Y)es or (N)o: ");
 				}
 			}
 		}
 
-		static Book AuthorOrTitle(List<Book> BookList)
+		// function to determine what to search books by
+		// we don't need BookList in the parameters because we don't use it
+		static Book AuthorOrTitle(/*List<Book> BookList*/)
 		{
 			string input;
 
-			Console.WriteLine("Do you wish to Search by (A)uthor, or (T)itle?");
+			// updated prompt to be a little cleaner
+			Console.Write("Do you wish to Search by Author or Title? (A/T): ");
 			while (true)
 			{
-				input = Console.ReadLine();
-				input = input.ToUpper().Substring(0);
+				/*input = Console.ReadLine();
+				input = input.ToUpper().Substring(0);*/
+				// can do all of the above on one line
+				input = Console.ReadLine().ToUpper().Substring(0);
 
-				if (input == "A")
+				if (input.Substring(0) == "A")
 				{
 					//ask user for input
-					Console.Write("Enter Author:\t");
+					Console.Write("Enter Author: ");
 					input = Console.ReadLine();
-					Book aBook = Book.SearchAuthor(input);
-					return aBook;
+					// get book
+					/*Book aBook = Book.SearchAuthor(input);
+					return aBook;*/
+					// can do all of the above on one line
+					return Book.SearchAuthor(input);
 				}
-				else if (input == "T")
+				else if (input.Substring(0) == "T")
 				{
 					//ask user for input
-					Console.Write("Enter Title:\t");
+					Console.Write("Enter Title: ");
 					input = Console.ReadLine();
-					Book aBook = Book.SearchTitle(input);
-					return aBook;
+					// get book
+					/*Book aBook = Book.SearchTitle(input);
+					return aBook;*/
+					// can do all of the above on one line
+					return Book.SearchTitle(input);
 				}
 				else
 				{
@@ -76,120 +87,100 @@ namespace LibraryTerminal
 			}
 		}
 
-		static void ReadFile(List<Book> BookList)
-		{
-			string input, line;
-			//	ask user to read from file
-			Console.WriteLine("Do you wish to read the Library Inventory from file? (Y)es or (N)o:\t");
-			while (true)
-			{
-				input = Console.ReadLine();
-				input = input.ToUpper().Substring(0);
-				if (input == "Y")
-				{
-					try
-					{
-						//	Read from file
-						StreamReader sr = new StreamReader("BookList.txt");
-						//	Continue to read until you reach end of file
-						//	Read the first line of text
-						while ((line = sr.ReadLine()) != null)
-						{
-							//	TODO: implement write to file, each quality of class Book in BookList
-							string[] info = line.Split('\t');
-							Book aBook = new Book(info[0], info[1], bool.Parse(info[2]), int.Parse(info[3]));
-							//	add aBook to BookList
-							Book.BookList.Add(aBook);
-							//	Read the next line
-							line = sr.ReadLine();
-						}
-						//	close the file
-						sr.Close();
-						Console.ReadLine();
-					}
-					catch (Exception ex)
-					{
-						Console.WriteLine(ex.Message);
-					}
-				}
-				else if (input == "N")
-				{
-					return;
-				}
-				else
-				{
-					Console.WriteLine("(Y)es or (N)o:\t");
-				}
-			}
-		}
-
-		static void WriteFile(List<Book> BookList)
-		{
-			//	TODO: ask user if they wish to write to file
-			string input;
-
-			Console.WriteLine("Do you wish to read the Library Inventory from file? (Y)es or (N)o:\t");
-			while (true)
-			{
-				input = Console.ReadLine();
-				input = input.ToUpper().Substring(0);
-				if (input == "Y")
-				{
-					try
-					{
-						//	Create or update file
-						StreamWriter sw = new StreamWriter("BookList.txt");
-						//	Write BookList to file 
-						for (int index = 0; index < BookList.Count; index++)
-						{
-							Book aBook = BookList[index];
-							//	write aBook to next line
-							sw.WriteLine(aBook.ToString());
-						}
-						//	Close the file
-						sw.Close();
-					}
-					catch (Exception ex)
-					{
-						Console.WriteLine(ex.Message);
-					}
-				}
-				else if (input == "N")
-				{
-					return;
-				}
-				else
-				{
-					Console.WriteLine("(Y)es or (N)o:\t");
-				}
-			}
-		}
+		static void PrintMenu()
+        {
+			Console.WriteLine("\nLibrary Menu Options: \n" +
+				"\t1. Print all books\n" +
+				"\t2. Search for a book\n" +
+				"\t3. Load book list from a file\n" +
+				"\t4. Save book list to a file\n");
+        }
 
 		static void Main(string[] args)
 		{
-			string input;
 			Console.WriteLine("Welcome to the Grand Circus Library!");
-			//	ask user to read from file
-			ReadFile(Book.BookList);
+			/*//	ask user to read from file
+			ReadFile(Book.BookList);*/
 
-			//	book list here
-			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, 0));
-			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
-			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, 14));
-			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, 12));
-			Book.BookList.Add(new Book("The Alchemist", "Paulo Coelho", true, 0));
-			Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, 6));
-			Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, 7));
-			Book.BookList.Add(new Book("Children of Blood and Bone", "Tomi Adeyemi", true, 0));
-			Book.BookList.Add(new Book("The Hate U Give", "Angie Thomas", true, 0));
-			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, 2));
-			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
-			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
+			// flag to keep track of whether we read from a file and if it was successful
+			//bool readFile = false;
+			/*Console.Write("Would you like to load booklist from a file? (y/n) (default = n): ");
+			// read key pressed from user
+			if (Console.ReadKey(true).Key == ConsoleKey.Y)
+            {
+				readFile = Book.ReadFile("BookList.txt");
+            }*/
+
+			/*// initialize list only if ReadFile was unsuccessful or if user did not opt to read file
+			if (!readFile)
+			{
+			*/// initialize book list here if we are not reading from a file
+			DateTime today = DateTime.Today;
+
+			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, today));
+			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, today));
+			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, today));
+			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, today));
+			Book.BookList.Add(new Book("The Alchemist", "Paulo Coelho", true, today));
+			Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, today));
+			Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, today));
+			Book.BookList.Add(new Book("Children of Blood and Bone", "Tomi Adeyemi", true, today));
+			Book.BookList.Add(new Book("The Hate U Give", "Angie Thomas", true, today));
+			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, today));
+			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, today));
+			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, today));
+			/*}*/
 
 			//	loop main code here
 			do
 			{
-				Book aBook = AuthorOrTitle(Book.BookList);
+				// variable to capture user input 
+				string input;
+				// variable to capture option from user
+				int opt;
+
+				// main menu loop
+				do
+				{
+					// print menu
+					PrintMenu();
+					Console.Write("Please select an option from the menu above: ");
+					input = Console.ReadLine();
+
+					// get menu option from user
+					if (!int.TryParse(input, out opt))
+					{
+						Console.WriteLine($"Invalid input: {input}");
+						continue;
+					}
+					else if (opt < 1 || opt > 4)
+					{
+						Console.WriteLine($"Invalid option: {opt}");
+						continue;
+					}
+
+					break;
+				} while (true);	
+
+
+				switch(opt)
+                {
+					case 1:
+						Console.WriteLine(Book.ListBooks());
+						break;
+					case 2:
+						Book book = AuthorOrTitle();
+						Console.WriteLine(book);
+						break;
+					case 3:
+						Book.ReadFile();
+						break;
+					case 4:
+						Book.WriteFile();
+						break;
+                }
+
+				/*Book aBook = AuthorOrTitle();
 				if (aBook != null)
 				{
 					Console.WriteLine(aBook);
@@ -197,12 +188,13 @@ namespace LibraryTerminal
 				else
 				{
 					Console.WriteLine("Book not found.");
-				}
+				}*/
 			}
-			while (ContinueProgram() == true);
+			// do not need to add == true here, ContinueProgram returns a boolean
+			while (ContinueProgram()/* == true*/);
 
 			//	ask user to save to file
-			WriteFile(Book.BookList);
+			/*WriteFile(Book.BookList);*/
 			//	end program here
 		}
 	}
