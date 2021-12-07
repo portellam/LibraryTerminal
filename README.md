@@ -32,11 +32,10 @@ LIBRARY TERMINAL
       o Return a book. (You can decide how that looks/what questions it
         asks.)
 				
-  Optional enhancements:
-	
-		● (Moderate) When the user quits, save the current library book list (including
-			due dates and statuses) to the text file so the next time the program runs, it
-			remembers.
+  Optional enhancements:	
+● (Moderate) When the user quits, save the current library book list (including
+due dates and statuses) to the text file so the next time the program runs, it
+remembers.
 			
 		● (Julius Caesar) Burn down the library of Alexandria and set human Civilization
       back by a few hundred years.
