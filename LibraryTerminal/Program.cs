@@ -28,7 +28,7 @@ namespace LibraryTerminal
 			{
 				input = Console.ReadLine().ToUpper();
 
-				if (input.Substring(0) == "Y")
+				if (input.Substring(0) == "Y" || input == "YES")
 				{
 					return true;
 				}
@@ -56,7 +56,7 @@ namespace LibraryTerminal
 				/*input = Console.ReadLine();
 				input = input.ToUpper().Substring(0);*/
 				// can do all of the above on one line
-				input = Console.ReadLine().ToUpper().Substring(0);
+				input = Console.ReadLine().ToUpper();
 
 				if (input.Substring(0) == "A")
 				{

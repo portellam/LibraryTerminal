@@ -12,7 +12,7 @@ namespace LibraryTerminal
 		public string Title;
 		public string Author;
 		public bool Status;
-		public DateTime DueDate;
+		public DateTime DueDate;	//NOTE: DateTime is a function which calls the current date and time ?
 
 		/* CONSTRUCTORS */
 		public Book(string title, string author, bool status, DateTime dueDate)
@@ -60,7 +60,9 @@ namespace LibraryTerminal
 		/* OVERRIDES */
 		public override string ToString()
 		{
-			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), Status ? "N/A" : DueDate.ToString("d"));
+			//NOTE: String.Format uses {index,offset} to format strings on a line
+			//NOTE: Status ? "N/A" : DueDate.ToString("d")		is the same as an if else statement
+			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), Status ? "N/A" : DueDate.ToString("d")); 
 		}
 
 		/* STATIC BOOK METHODS */
@@ -95,7 +97,7 @@ namespace LibraryTerminal
 		{
 			string output = "";
             Console.WriteLine(String.Format("\n{0,-40} {1,-35} {2,-15} {3,-11}", "Title", "Author", "Status", "Due Date"));
-            Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");
+            Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");	// does this line require String.Format ???
             for (int index = 0; index < BookList.Count; index++)
 			{
 				Book aBook = BookList[index];
