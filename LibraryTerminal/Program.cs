@@ -4,6 +4,7 @@ using System.IO;
 
 namespace LibraryTerminal
 {
+/*
 	class Book
 	{
 		public static List<Book> BookList = new List<Book>();
@@ -52,6 +53,7 @@ namespace LibraryTerminal
 			}
 			return output;
 		}
+*/
 
 	}
 	class Program
@@ -68,8 +70,7 @@ namespace LibraryTerminal
 		//	-If not, check it out to them and set the due date to 2 weeks from today. (The DateTime class will be helpful)
 
 		//Return a book.
-
-
+    
 		static bool ContinueProgram()
 		{
 			string input;
@@ -183,43 +184,46 @@ namespace LibraryTerminal
 					Console.WriteLine("(Y)es or (N)o:\t");
 				}
 			}
+    }
 
-			static void Main(string[] args)
+		static void Main(string[] args)
+		{
+  		//TODO: implement to read/write from/to text file, to save BookList for later runs
+			//	read from text file
+			ReadFile(BookList);
+  
+			//
+			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, 0));   // Green Eggs is on the shelf
+			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
+			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, 14));
+			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, 12));
+			Book.BookList.Add(new Book("The Alchemist", "Paulo Coelho", true, 0));
+			Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, 6));
+			Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, 7));
+			Book.BookList.Add(new Book("Children of Blood and Bone", "Tomi Adeyemi", true, 0));
+			Book.BookList.Add(new Book("The Hate U Give", "Angie Thomas", true, 0));
+			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, 2));
+			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
+			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
+
+      //TODO: implement main loop
+			//	main code here
+			do
 			{
-
-				//TODO: implement to read/write from/to text file, to save BookList for later runs
-				//	read from text file
-				//ReadFile(BookList);
-				//
-
-				Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, 0));
-				Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, 0));
-				Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, 14));
-				Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, 12));
-				Book.BookList.Add(new Book("The Alchemist", "Paulo Coelho", true, 0));
-				Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, 6));
-				Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, 7));
-				Book.BookList.Add(new Book("Children of Blood and Bone", "Tomi Adeyemi", true, 0));
-				Book.BookList.Add(new Book("The Hate U Give", "Angie Thomas", true, 0));
-				Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, 2));
-				Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, 0));
-				Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, 9));
-
-				//TODO: implement main loop
-				//	main code here
-				//do
-				//{
-				//	begin code here
-
-				//	end code here
-				//} while (ContinueProgram() == true);
-				//			
-
-				//TODO: implement write to text file, contents of BookList
-				//	read from text file
-				//WriteFile(BookList);
-				//
-				//	end program here
+			//	begin code here
+        
+			Book book = Book.SearchAuthor("foobar");
+			if (book != null) Console.WriteLine(book);
+			else Console.WriteLine("No authors found");
+        
+      //	end code here
+			} while (ContinueProgram() == true);
+			//	
+      //TODO: implement write to text file, contents of BookList
+			//	read from text file
+		  WriteFile(BookList);
+			//
+			//	end program here
 			}
 		}
 	}
