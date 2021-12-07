@@ -53,13 +53,14 @@ namespace LibraryTerminal
 
 			// if book is available invert status, return true (i.e. success)
 			Status = !Status;
+			DueDate = DateTime.Today.AddDays(14);
 			return true;
 		}
 
 		/* OVERRIDES */
 		public override string ToString()
 		{
-			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), DueDate.ToString("d"));
+			return String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", Title, Author, BookStatus(), Status ? "N/A" : DueDate.ToString("d"));
 		}
 
 		/* STATIC BOOK METHODS */
@@ -67,7 +68,7 @@ namespace LibraryTerminal
 		{
 			foreach (Book book in BookList)
 			{
-				if (input == book.Author)
+				if (book.Author.Contains(input))
 				{
 					Console.WriteLine("Here's your book: \n");
 					return book;
@@ -80,7 +81,7 @@ namespace LibraryTerminal
 		{
 			foreach (Book book in BookList)
 			{
-				if (input == book.Title)
+				if (book.Title.Contains(input))
 				{
 					Console.WriteLine("Here's your book: \n");
 					return book;
@@ -93,7 +94,7 @@ namespace LibraryTerminal
 		public static string ListBooks()
 		{
 			string output = "";
-            Console.WriteLine(String.Format("{0,-40} {1,-35} {2,-15} {3,-11}", "Title", "Author", "Status", "Due Date"));
+            Console.WriteLine(String.Format("\n{0,-40} {1,-35} {2,-15} {3,-11}", "Title", "Author", "Status", "Due Date"));
             Console.WriteLine("{0,-40} {1,-35} {2,-15} {3,-11}", "=====", "======", "======", "========");
             for (int index = 0; index < BookList.Count; index++)
 			{
@@ -134,16 +135,13 @@ namespace LibraryTerminal
 				while ((line = sr.ReadLine()) != null)
 				{
 					//	TODO: implement write to file, each quality of class Book in BookList
-					string[] info = line.Split('\t');
+					string[] info = line.Split(',');
 					Book aBook = new Book(info[0], info[1], bool.Parse(info[2]), DateTime.Parse(info[3]));
 					//	add aBook to BookList
 					Book.BookList.Add(aBook);
-					//	Read the next line
-					line = sr.ReadLine();
 				}
 				//	close the file
 				sr.Close();
-				Console.ReadLine();
 			}
 			catch (Exception ex)
 			{
@@ -195,7 +193,7 @@ namespace LibraryTerminal
 				{
 					Book aBook = BookList[index];
 					//	write aBook to next line
-					sw.WriteLine(aBook.ToString());
+					sw.WriteLine($"{aBook.Title},{aBook.Author},{aBook.Status},{aBook.DueDate.ToString("d")}");
 				}
 				//	Close the file
 				sw.Close();

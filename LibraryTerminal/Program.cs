@@ -119,16 +119,16 @@ namespace LibraryTerminal
 
 			Book.BookList.Add(new Book("Green Eggs and Ham", "Dr. Seuss", true, today));
 			Book.BookList.Add(new Book("The Art of War", "Sun Tzu", true, today));
-			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, today));
-			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, today));
+			Book.BookList.Add(new Book("Queenie", "Candice Carty-Williams", false, today.AddDays(14)));
+			Book.BookList.Add(new Book("The 48 Laws of Power", "Robert Greene", false, today.AddDays(14)));
 			Book.BookList.Add(new Book("The Alchemist", "Paulo Coelho", true, today));
-			Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, today));
-			Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, today));
+			Book.BookList.Add(new Book("Honey Girl", "Morgan Rogers", false, today.AddDays(14)));
+			Book.BookList.Add(new Book("A History of Central Banking", "Stephen Mittford Goodson", false, today.AddDays(14)));
 			Book.BookList.Add(new Book("Children of Blood and Bone", "Tomi Adeyemi", true, today));
 			Book.BookList.Add(new Book("The Hate U Give", "Angie Thomas", true, today));
-			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, today));
+			Book.BookList.Add(new Book("Twilight", "Stephenie Meyer", false, today.AddDays(14)));
 			Book.BookList.Add(new Book("To Kill a Mockingbird", "Harper Lee", true, today));
-			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, today));
+			Book.BookList.Add(new Book("Leading with My Chin", "Jay Leno", false, today.AddDays(14)));
 			/*}*/
 
 			//	loop main code here
@@ -170,7 +170,29 @@ namespace LibraryTerminal
 						break;
 					case 2:
 						Book book = AuthorOrTitle();
-						Console.WriteLine(book);
+						if (book != null)
+						{
+							Console.WriteLine(book);
+							Console.Write("Would you like to check out the book? (y/n): ");
+							input = Console.ReadLine().ToLower();
+
+							if (input == "y" || input == "yes")
+                            {
+								if (book.CheckOutBook())
+								{
+									Console.WriteLine($"You've successfully checked out {book.Title} by {book.Author}");
+								}
+								else
+                                {
+									Console.WriteLine($"You cannot check out {book.Title} because it is not available...");
+                                }
+                            }
+						}
+						else
+						{
+							Console.WriteLine("Could not find a book matching your query...");
+						}
+						
 						break;
 					case 3:
 						Book.ReadFile();
@@ -179,6 +201,8 @@ namespace LibraryTerminal
 						Book.WriteFile();
 						break;
                 }
+
+				
 
 				/*Book aBook = AuthorOrTitle();
 				if (aBook != null)
