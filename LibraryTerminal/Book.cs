@@ -105,7 +105,7 @@ namespace LibraryTerminal
 		}
 
 		// moved to Book as a static method for initializing BookList from a file
-		public static bool ReadFile()
+		public static void ReadFile()
 		{
 			// input is unecessary here since we are not looping
 			string /*input,*/ line;
@@ -145,11 +145,9 @@ namespace LibraryTerminal
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
-				return false;
+				// updated error ouput message
+				Console.WriteLine($"Error reading from file: {ex.Message} (Path: {path})");
 			}
-
-			return true;
 			/*}
 			else if (input == "N")
 			{
