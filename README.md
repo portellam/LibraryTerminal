@@ -1,5 +1,5 @@
 # LibraryTerminal
-Grand Circus C#2021-22, Week 4, OOP Project
+Grand Circus C# 2021-22, Week 4, OOP Project
 
 LIBRARY TERMINAL
 
